@@ -1,0 +1,49 @@
+.title-head{
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+    font-size: xx-large;
+}
+
+.column-wrapper{
+    margin: auto;
+    display: flex;
+}
+
+.navbar-wrapper{
+    display: flex;
+    align-items: baseline;
+    background-color: blue;
+}
+
+.navbar-brand{
+    background-color: blue;
+    font-weight: bold;
+}
+
+.navbar-link{
+    color: white;
+}
+
+.box{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#todoList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#todoList .box {
+    margin-bottom: 0;
+    padding: 0.75rem;
+}
+
+.add-wrapper{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}

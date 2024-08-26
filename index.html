@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+    >
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="navbar-wrapper">
+
+    <h1 class="title-head">Trello</h1>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+            Workspaces
+            </a>
+          </div>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+            Recent
+            </a>
+          </div>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Marked
+            </a>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Templates
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns column-wrapper">
+  <div class="column first ">
+        <div class="box">
+          <p class="title is-5">To Do</p>
+          <div id="todoList"></div>
+          <div class="add-wrapper">
+            <button id="addTaskButton" class="button is-link">Add Task</button>
+          </div>
+        </div>
+    </div>
+
+    <div class="column ">
+        <div class="box">
+          <p class="title is-5">Doing</p>
+        </div>
+    </div>
+
+    <div class="column ">
+        <div class="box">
+          <p class="title is-5">Under Review</p>
+        </div>
+    </div>
+
+    <div class="column ">
+        <div class="box" >
+          <p class="title is-5">Done</p>
+        </div>
+    </div>
+  </div>
+
+
+  <div id="taskModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">New Task</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <input id="taskTitle" class="input" type="text" placeholder="Task Title" />
+        <input id="taskDescription" class="input" type="text" placeholder="Task Description" />
+      </section>
+      <footer class="modal-card-foot">
+        <div class="buttons">
+          <button id="saveTaskButton" class="button is-success" onclick="saveTask()">Save changes</button>
+          <button class="button">Cancel</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  
+    
+</body>
+</html>
