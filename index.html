@@ -49,9 +49,9 @@
 
   <div class="columns column-wrapper">
   <div class="column first ">
-        <div class="box dropzone" id="todoColumn">
+        <div class="box">
           <p class="title is-5">To Do</p>
-          <div id="todoList"></div>
+          <div id="todoList" class="dropzone task-list"></div>
         </div>
         <div class="add-wrapper">
           <button id="addTaskButton" class="button is-link">Add Task</button>
@@ -59,20 +59,23 @@
     </div>
 
     <div class="column ">
-        <div class="box dropzone" id="doingColumn">
+        <div class="box">
           <p class="title is-5">Doing</p>
+          <div id="doingList" class="dropzone task-list"></div>
         </div>
     </div>
 
     <div class="column ">
-        <div class="box dropzone" id="reviewColumn">
+        <div class="box">
           <p class="title is-5">Under Review</p>
+          <div id="reviewList" class="dropzone task-list"></div>
         </div>
     </div>
 
     <div class="column ">
-        <div class="box dropzone" id="doneColumn" >
+        <div class="box" >
           <p class="title is-5">Done</p>
+          <div id="doneList" class="dropzone task-list"></div>
         </div>
     </div>
   </div>

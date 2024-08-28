@@ -57,3 +57,22 @@
 .card-title-wrapper{
     font-weight: bold;
 }
+
+.box-add {
+    cursor: move;
+    margin-bottom: 10px;
+    user-select: none; /* Previene la selección de texto durante el arrastre */
+}
+
+.task-list {
+    min-height: 50px;
+    padding: 10px;
+}
+
+.hide {
+    opacity: 0.5; /* Cambiamos display: none por opacity para debugging */
+}
+
+.drag-over {
+    border: 2px dashed #000;
+}
