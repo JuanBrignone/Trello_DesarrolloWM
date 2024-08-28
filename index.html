@@ -13,7 +13,7 @@
 <body>
   <div class="navbar-wrapper">
 
-    <h1 class="title-head">Trello</h1>
+    <h1 class="title-head">Administrador de Tareas</h1>
 
     <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
@@ -82,12 +82,16 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">New Task</p>
+        <p class="modal-card-title card-title-wrapper">New Task</p>
         <button class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        <input id="taskTitle" class="input" type="text" placeholder="Task Title" />
-        <input id="taskDescription" class="input" type="text" placeholder="Task Description" />
+        <header class="taskTitle-wrapper">Task Title</header>
+        <input id="taskTitle" class="input" type="text" placeholder="" />
+        <header class="taskDescription-wrapper">Task Description</header>
+        <input id="taskDescription" class="input" type="text" placeholder="" />
+        <header class="asignedTo">Asigned To</header>
+        <input id="taskAsigned" class="input" type="text" placeholder="" />
       </section>
       <footer class="modal-card-foot">
         <div class="buttons">

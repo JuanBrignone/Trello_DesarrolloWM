@@ -31,15 +31,16 @@ function saveTask(){
     console.log("saveTask funcionando")
     const taskTitle = document.getElementById('taskTitle').value.trim();
     const taskDescription = document.getElementById('taskDescription').value.trim();
+    const taskAsigned = document.getElementById('taskAsigned').value.trim();
 
     if (taskTitle !== '') {
-        addTaskTodoList(taskTitle, taskDescription);
+        addTaskTodoList(taskTitle, taskDescription, taskAsigned);
         closeTaskModal();
     }
 }
 
-function addTaskTodoList(title, description){
-    console.log("Añadiendo task:", title, description);
+function addTaskTodoList(title, description, asigned){
+    console.log("Añadiendo task:", title, description, asigned);
     const todoList = document.getElementById('todoList');
 
     const taskItem = document.createElement('div');
@@ -47,6 +48,7 @@ function addTaskTodoList(title, description){
     taskItem.innerHTML = `
     <h3 class="title is-6">${title}</h3>
     <p>${description}</p>
+    <p>${asigned}</p>
     `;
 
 todoList.appendChild(taskItem);
@@ -55,4 +57,5 @@ todoList.appendChild(taskItem);
 function clearModalFields() {
     document.getElementById('taskTitle').value = '';
     document.getElementById('taskDescription').value = '';
+    document.getElementById('taskAsigned').value = '';
 }

@@ -47,3 +47,13 @@
     justify-content: flex-end;
     padding: 10px;
 }
+
+.taskTitle-wrapper, .taskDescription-wrapper, .asignedTo{
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.card-title-wrapper{
+    
+}
