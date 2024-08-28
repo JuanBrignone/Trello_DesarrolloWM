@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     console.log("todoList initial state:", document.getElementById('todoList').innerHTML);
     initializeApp();
+    setupDragAndDrop();
 });
 
 function initializeApp(){
@@ -45,13 +46,54 @@ function addTaskTodoList(title, description, asigned){
 
     const taskItem = document.createElement('div');
     taskItem.className = 'box box-add';
+    taskItem.draggable = true;
     taskItem.innerHTML = `
     <h3 class="title is-6">${title}</h3>
     <p>${description}</p>
     <p>${asigned}</p>
     `;
 
-todoList.appendChild(taskItem);
+    taskItem.addEventListener('dragstart', dragStart);
+    todoList.appendChild(taskItem);
+}
+
+function setupDragAndDrop(){
+    const draggables = document.querySelectorAll('.box-add');
+    const dropzones = document.querySelectorAll('.dropzone');
+    
+    draggables.forEach(draggable =>{
+        draggable.addEventListener('dragstart', dragStart);
+    })
+
+    dropzones.forEach(dropzone =>{
+        dropzone.addEventListener('dragover', dragOver);
+        dropzone.addEventListener('drop', drop);
+    })
+}
+
+function dragStart(e){
+    e.dataTransfer.setData('text/plain', e.target.id);
+    setTimeout(() => {
+        e.target.classList.add('hide');
+    }, 0);
+}
+
+function dragOver(e) {
+    e.preventDefault();
+    e.target.classList.add('drag-over');
+}
+
+function drop(e){
+    e.preventDefault();
+    e.target.classList.remove('drag-over');
+
+    const id = e.dataTransfer.getData('text/plain');
+    const draggable = document.getElementById(id) || document.querySelector('.hide');
+
+    if(draggable){
+        draggable.classList.remove('.hide');
+        e.target.appendChild(draggable);
+    }
 }
 
 function clearModalFields() {
