@@ -61,7 +61,7 @@
 .box-add {
     cursor: move;
     margin-bottom: 10px;
-    user-select: none; /* Previene la selección de texto durante el arrastre */
+    user-select: none; 
 }
 
 .task-list {
@@ -70,7 +70,7 @@
 }
 
 .hide {
-    opacity: 0.5; /* Cambiamos display: none por opacity para debugging */
+    opacity: 0.5; 
 }
 
 .drag-over {
