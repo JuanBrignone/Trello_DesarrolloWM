@@ -41,9 +41,7 @@ function closeTaskModal() {
 function saveTask() {
   console.log("saveTask funcionando");
   const taskTitle = document.getElementById("taskTitle").value.trim();
-  const taskDescription = document
-    .getElementById("taskDescription")
-    .value.trim();
+  const taskDescription = document.getElementById("taskDescription").value.trim();
   const taskAsigned = document.getElementById("taskAsigned").value.trim();
 
   if (taskTitle !== "") {
@@ -52,11 +50,12 @@ function saveTask() {
       title: taskTitle,
       description: taskDescription,
       asigned: taskAsigned,
+      state: "To Do" //asigno el state de To Do como predeterminado al crear una nueva task
     };
     tasksArray.push(task); // Guardar en el array de tareas 
     console.log("Tareas guardadas:", tasksArray); // Mostrar las tareas en consola para verificar
 
-    addTaskTodoList(task.title, task.description, task.asigned, task.state); //añade las tareas
+    addTaskTodoList(task.title, task.description, task.asigned, task.state, task.id); //añade las tareas
     saveTaskToServer(task); //Guarda las tareas creadas en el archivo .json
     closeTaskModal();
   }
@@ -69,10 +68,10 @@ function setupDragAndDrop() {
   document.addEventListener("drop", drop);
 }
 
-function dragStart(e) {
+function dragStart(e) { //esta funcion se activa cuando empezamos a arrastrar una tarea
   console.log("Drag started", e.target);
   if (e.target.classList.contains("box-add")) {
-    e.dataTransfer.setData("text/plain", e.target.id);
+    e.dataTransfer.setData("text/plain", e.target.id); //almacena el id de la tarea para usarlo cuando suelte
     setTimeout(() => {
       e.target.classList.add("hide");
     }, 0);
@@ -80,7 +79,7 @@ function dragStart(e) {
 }
 
 function dragOver(e) {
-  e.preventDefault();
+  e.preventDefault(); //permite soltar la tarea en la columna 
   if (e.target.classList.contains("dropzone")) {
     console.log("Dragging over dropzone", e.target);
     e.target.classList.add("drag-over");
@@ -88,30 +87,32 @@ function dragOver(e) {
 }
 
 function drop(e) {
-  e.preventDefault();
-  console.log("Drop event triggered", e.target);
-  const dropzone = e.target.closest(".dropzone");
-  if (dropzone) {
-    console.log("Valid dropzone found", dropzone);
-    dropzone.classList.remove("drag-over");
-    const id = e.dataTransfer.getData("text/plain");
-    console.log("Task ID:", id);
-    const draggable =
-      document.getElementById(id) || document.querySelector(".box-add.hide");
-
+    e.preventDefault();
+    console.log("Drop event triggered", e.target);
+    const dropzone = e.target.closest(".dropzone");
+    if (dropzone) {
+        console.log("Valid dropzone found", dropzone);
+        dropzone.classList.remove("drag-over");
+        const id = e.dataTransfer.getData("text/plain"); //recupera el id de la tarea que se arrastro
+        const draggable = document.getElementById(id); //encuentra el elemento arrastrado
+  
     if (draggable) {
-      console.log("Moving task", draggable);
-      draggable.classList.remove("hide");
-      dropzone.appendChild(draggable);
-    } else {
-      console.log("No draggable element found");
+        console.log("Moving task", draggable);
+        draggable.classList.remove("hide"); //muestra la tarea
+        dropzone.appendChild(draggable); //añade la tarea a la columna
+  
+    //actualiza el estado de la tarea segun la columna que se encuentre
+    const newState = dropzone.id === "todoList" ? "To Do" :
+                        dropzone.id === "doingList" ? "Doing" :
+                        dropzone.id === "reviewList" ? "Under Review" :
+                        "Done";
+  
+    updateTaskState(id, newState); //llama a la funcion para actualizar el state de la tarea y lo guarda en el .json
+      }
     }
-  } else {
-    console.log("No valid dropzone found");
-  }
 }
 
-function addTaskTodoList(title, description, asigned, state) {
+function addTaskTodoList(title, description, asigned, state, id) {
     const todoList = document.getElementById('todoList');
     const doingList = document.getElementById('doingList');
     const reviewList = document.getElementById('reviewList');
@@ -120,7 +121,7 @@ function addTaskTodoList(title, description, asigned, state) {
     const taskItem = document.createElement('div');
     taskItem.className = 'box box-add';
     taskItem.draggable = true;
-    taskItem.id = 'task-' + Date.now();
+    taskItem.id = id;
     taskItem.innerHTML = `
       <h3 class="title is-6">${title}</h3>
       <p>${description}</p>
@@ -183,7 +184,7 @@ tasks = fetchDataAW().then((tasksResponse) => {
 
 function loadTasks() {
     tasksArray.forEach(task => {
-      addTaskTodoList(task.title, task.description, task.asigned, task.state);
+      addTaskTodoList(task.title, task.description, task.asigned, task.state, task.id);
     });
   }
 
@@ -201,3 +202,27 @@ function saveTaskToServer(task) {
             console.error("Error al guardar la tarea en el servidor:", error);
         });
 }
+
+function updateTaskState(taskId, newState) {
+    const task = tasksArray.find(t => t.id === taskId); //encuentra la tarea en el array
+    if (task) {
+      task.state = newState; //actualiza el estado de la tarea
+      console.log(`Task ${taskId} state updated to ${newState}`);
+      updateTaskOnServer(task);   //actualiza el estado en el servidor y los guarda
+    }
+}
+  
+function updateTaskOnServer(task) {
+    fetch(`${url}/${task.id}`, {
+      method: "PUT", //usar PUT para actualizar una tarea existente
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Tarea actualizada en el servidor:", data);
+    })
+    .catch((error) => {
+      console.error("Error al actualizar la tarea en el servidor:", error);
+    });
+  }
