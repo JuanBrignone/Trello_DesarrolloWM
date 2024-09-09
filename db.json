@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Task 1",
-      "description": "Description for task 1",
-      "asigned": "John Doe",
-      "state": "To Do"
-    },
-    {
       "id": "2",
       "title": "Task 2",
       "description": "Description for task 2",
@@ -22,17 +15,10 @@
       "state": "To Do"
     },
     {
-      "id": "task-1725477901445",
-      "title": "a",
-      "description": "a",
-      "asigned": "a",
-      "state": "To Do"
-    },
-    {
-      "id": "task-1725478969925",
-      "title": "b",
-      "description": "b",
-      "asigned": "b",
+      "id": "task-1725882207952",
+      "title": "Task 1",
+      "description": "Description for task 1",
+      "asigned": "Agustin",
       "state": "To Do"
     }
   ]

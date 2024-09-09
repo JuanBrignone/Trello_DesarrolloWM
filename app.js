@@ -25,6 +25,14 @@ function initializeApp() {
   saveTaskButton.addEventListener("click", saveTask);
 
   setupDragAndDrop();
+
+  //listener para eliminar tareas
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-task')) {
+      const taskId = event.target.parentElement.id;
+      deleteTask(taskId);
+    }
+  });
 }
 
 function openTaskModal() {
@@ -126,7 +134,8 @@ function addTaskTodoList(title, description, asigned, state, id) {
       <h3 class="title is-6">${title}</h3>
       <p>${description}</p>
       <p>${asigned}</p>
-    `;
+      <button class="button is-danger is-hovered">Delete</button> 
+    `; //boton para eliminar tareas
   
     //segun el state, agrega la task a la columna que pertenece
     switch (state) {
@@ -146,7 +155,7 @@ function addTaskTodoList(title, description, asigned, state, id) {
         todoList.appendChild(taskItem);
         break;
     }
-  }
+}
 
 function clearModalFields() {
   document.getElementById("taskTitle").value = "";
@@ -186,12 +195,13 @@ function loadTasks() {
     tasksArray.forEach(task => {
       addTaskTodoList(task.title, task.description, task.asigned, task.state, task.id);
     });
-  }
+}
 
 loadTasks();
 
 function saveTaskToServer(task) {
-    fetch(url , { method: "POST", headers: {"Content-Type": "application/json"},
+    fetch(url , { method: "POST", 
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(task), //añade las tasks que creemos al archivo .json, asi quedan guardadas
     })
         .then(response => response.json())
@@ -215,7 +225,7 @@ function updateTaskState(taskId, newState) {
 function updateTaskOnServer(task) {
     fetch(`${url}/${task.id}`, {
       method: "PUT", //usar PUT para actualizar una tarea existente
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }, 
       body: JSON.stringify(task)
     })
     .then(response => response.json())
@@ -225,4 +235,34 @@ function updateTaskOnServer(task) {
     .catch((error) => {
       console.error("Error al actualizar la tarea en el servidor:", error);
     });
+}
+
+function deleteTask(taskId) {
+  // Eliminar la tarea del array
+  const index = tasksArray.findIndex(t => t.id === taskId);
+  if (index > -1) {
+      tasksArray.splice(index, 1);
   }
+  
+  // Eliminar la tarea del DOM
+  const taskElement = document.getElementById(taskId);
+  if (taskElement) {
+      taskElement.remove();
+  }
+
+  // Eliminar la tarea del .json
+  deleteTaskFromServer(taskId);
+}
+
+function deleteTaskFromServer(taskId) {
+  fetch(`${url}/${taskId}`, {
+    method: "DELETE", //uso DELETE para eliminar la tarea del .json
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Tarea eliminada del servidor:", data);
+  })
+  .catch((error) => {
+    console.error("Error al eliminar la tarea del servidor:", error);
+  });
+}
