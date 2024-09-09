@@ -1,24 +1,17 @@
 {
   "tasks": [
     {
-      "id": "2",
-      "title": "Task 2",
-      "description": "Description for task 2",
-      "asigned": "Jane Smith",
-      "state": "To Do"
-    },
-    {
-      "id": "3",
-      "title": "Task 3",
-      "description": "Description for task 3",
-      "asigned": "Alice Johnson",
-      "state": "To Do"
-    },
-    {
-      "id": "task-1725882207952",
+      "id": "7315",
       "title": "Task 1",
-      "description": "Description for task 1",
-      "asigned": "Agustin",
+      "description": "Description task 1",
+      "asigned": "Persona 1",
+      "state": "To Do"
+    },
+    {
+      "id": "5928",
+      "title": "TAsk 2",
+      "description": "Description task 2",
+      "asigned": "persona2",
       "state": "To Do"
     }
   ]
